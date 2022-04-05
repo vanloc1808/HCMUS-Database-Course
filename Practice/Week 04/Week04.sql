@@ -295,3 +295,62 @@ where b.TENBM = N'Hệ thống thông tin' and b.TRUONGBM = g.MAGV
 select distinct g.HOTEN
 from DETAI as d, CHUDE as c, GIAOVIEN as g
 where d.MACD = c.MACD and c.TENCD = N'Quản lý giáo dục' and d.GVCNDT = g.MAGV
+
+---Q15: Cho biet ten cac cong viec cua de tai HTTT quan ly cac truong DH co thoi gian bat dau trong thang 3/2008
+select distinct c.TENCV
+from DETAI d, CONGVIEC c
+where (d.MADT = c.MADT) and (d.TENDT = N'HTTT quản lý các trường ĐH') and (c.NGAYBD between '2008-03-01' and '2008-03-31')
+
+---Q16: Cho biet ten giao vien va nguoi quan ly chuyen mon cua giao vien do
+select g.HOTEN, gvqlcm.HOTEN as 'NGUOIQLCM'
+from GIAOVIEN as g, GIAOVIEN as gvqlcm
+where g.GVQLCM = gvqlcm.MAGV
+
+---Q17: Cho biet cac cong viec bat dau trong khoang tu ngay 01/01/2007 den ngay 01/08/2007
+select *
+from CONGVIEC
+where NGAYBD between '2007-01-01' and '2007-08-01'
+
+---Q18: Cho biet ho ten cac giao vien cung bo mon voi Tran Tra Huong
+select g.HOTEN
+from GIAOVIEN as g, BOMON as b, GIAOVIEN as tth
+where (g.MABM = b.MABM) and (tth.HOTEN = N'Trần Trà Hương') and (g.MABM = tth.MABM) and (g.HOTEN != N'Trần Trà Hương')
+
+---Q19: Tim nhung giao vien vua la truong bo mon vua la chu nhiem de tai
+select distinct g.MAGV, g.HOTEN
+from GIAOVIEN as g, BOMON as b, DETAI as d
+where b.TRUONGBM = g.MAGV and d.GVCNDT = g.MAGV
+
+---Q20: Cho biet ten nhung giao vien vua la truong khoa vua la truong bo mon
+select g.HOTEN
+from GIAOVIEN as g, KHOA as k, BOMON as b
+where k.TRUONGKHOA = g.MAGV and b.TRUONGBM = g.MAGV
+
+---Q21: Cho biet ten nhung truong bo mon vua chu nhiem de tai
+select distinct g.HOTEN
+from GIAOVIEN as g, BOMON as b, DETAI as d
+where b.TRUONGBM = g.MAGV and d.GVCNDT = g.MAGV
+
+---Q22: Cho biet ma so cac truong khoa co chu nhiem de tai
+select distinct g.MAGV
+from GIAOVIEN as g, KHOA as k, DETAI as d
+where k.TRUONGKHOA = g.MAGV and d.GVCNDT = g.MAGV
+
+---Q23: Cho biet ma so cac giao vien thuoc bo mon HTTT hoac co tham gia de tai 001
+select distinct g.MAGV
+from GIAOVIEN as g, BOMON as b , THAMGIADT t
+where b.MABM = g.MABM and (b.MABM = 'HTTT' or t.MADT = '001') and g.MAGV = t.MAGV 
+
+---Q24: Cho biet cac giao vien lam viec cung bo mon voi giao vien 002
+select g.MAGV, g.HOTEN
+from GIAOVIEN as g, BOMON as b, GIAOVIEN as kkh
+where (g.MABM = b.MABM) and (kkh.MAGV = '002') and (g.MABM = kkh.MABM) and (g.MAGV != '002')
+
+---Q25: Tim nhung giao vien la truong bo mon
+select g.MAGV, g.HOTEN, b.TENBM
+from GIAOVIEN as g, BOMON as b
+where b.TRUONGBM = g.MAGV
+
+---Q26: Cho biet ho ten va muc luong cua cac giao vien
+select g.HOTEN, g.LUONG
+from GIAOVIEN as g
